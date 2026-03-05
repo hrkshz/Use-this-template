@@ -1,9 +1,24 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ChevronDown } from 'lucide-react';
 import { profile } from '../data/profile';
 import styles from './About.module.css';
 
 const About: React.FC = () => {
+    const [openIndexes, setOpenIndexes] = useState<Set<number>>(new Set());
+
+    const toggle = (index: number) => {
+        setOpenIndexes(prev => {
+            const next = new Set(prev);
+            if (next.has(index)) {
+                next.delete(index);
+            } else {
+                next.add(index);
+            }
+            return next;
+        });
+    };
+
     return (
         <section className={styles.about} id="about">
             <div className="container">
@@ -31,87 +46,84 @@ const About: React.FC = () => {
                 )}
 
                 <div className={styles.timeline}>
-                    {profile.engineerCareers.length > 0 && (
-                        <div className={styles.timelineSection}>
-                            <p className={styles.timelineLabel}>エンジニアキャリア</p>
-                            {profile.engineerCareers.map((career, index) => (
-                                <motion.div
-                                    key={index}
-                                    className={`${styles.timelineItem} ${styles.engineer}`}
-                                    initial={{ opacity: 0, x: -16 }}
-                                    whileInView={{ opacity: 1, x: 0 }}
-                                    viewport={{ once: true }}
-                                    transition={{ duration: 0.4, delay: index * 0.1 }}
+                    {profile.careers.map((career, index) => {
+                        const isOpen = openIndexes.has(index);
+
+                        return (
+                            <motion.div
+                                key={index}
+                                className={styles.timelineItem}
+                                initial={{ opacity: 0, x: -16 }}
+                                whileInView={{ opacity: 1, x: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ duration: 0.4, delay: index * 0.1 }}
+                            >
+                                <div className={styles.timelineDot}></div>
+                                <div
+                                    className={`${styles.card} ${isOpen ? styles.open : ''}`}
+                                    onClick={() => toggle(index)}
                                 >
-                                    <div className={styles.timelineDot}></div>
-                                    <div className={styles.engineerCard}>
-                                        <div className={styles.cardHeader}>
-                                            <div>
-                                                <h3 className={styles.cardTitle}>{career.company}</h3>
-                                                <span className={styles.cardRole}>{career.role}</span>
-                                            </div>
+                                    <div className={styles.cardSummary}>
+                                        <div>
+                                            <h3 className={styles.cardTitle}>{career.role}</h3>
+                                            {career.company && (
+                                                <span className={styles.cardCompany}>{career.company}</span>
+                                            )}
                                         </div>
-                                        {career.project && (
-                                            <h4 className={styles.projectTitle}>{career.project}</h4>
-                                        )}
-                                        <p className={styles.cardDesc}>{career.desc}</p>
-
-                                        {career.tasks && career.tasks.length > 0 && (
-                                            <div className={styles.sectionBlock}>
-                                                <span className={styles.sectionLabel}>【主な担当業務】</span>
-                                                <ul className={styles.sectionList}>
-                                                    {career.tasks.map((task, i) => (
-                                                        <li key={i}>{task}</li>
-                                                    ))}
-                                                </ul>
-                                            </div>
-                                        )}
-
-                                        {career.achievements && career.achievements.length > 0 && (
-                                            <div className={styles.sectionBlock}>
-                                                <span className={styles.sectionLabel}>【実績・成果】</span>
-                                                <ul className={styles.sectionList}>
-                                                    {career.achievements.map((ach, i) => (
-                                                        <li key={i}>{ach}</li>
-                                                    ))}
-                                                </ul>
-                                            </div>
-                                        )}
-
-                                        {career.tech && (
-                                            <div className={styles.techBadge}>
-                                                <strong>使用技術: </strong>{career.tech}
-                                            </div>
-                                        )}
+                                        <span className={`${styles.chevron} ${isOpen ? styles.chevronOpen : ''}`}>
+                                            <ChevronDown size={20} />
+                                        </span>
                                     </div>
-                                </motion.div>
-                            ))}
-                        </div>
-                    )}
 
-                    {profile.generalCareers.length > 0 && (
-                        <div className={styles.timelineSection}>
-                            <p className={styles.timelineLabel}>それ以前のキャリア</p>
-                            {profile.generalCareers.map((career, index) => (
-                                <motion.div
-                                    key={index}
-                                    className={`${styles.timelineItem} ${styles.general}`}
-                                    initial={{ opacity: 0, x: -16 }}
-                                    whileInView={{ opacity: 1, x: 0 }}
-                                    viewport={{ once: true }}
-                                    transition={{ duration: 0.4, delay: index * 0.06 }}
-                                >
-                                    <div className={styles.timelineDot}></div>
-                                    <div className={styles.generalCard}>
-                                        <div className={styles.generalCardBody}>
-                                            <span className={styles.generalCardTitle}>{career.role}</span>
-                                            <span className={styles.generalCardDesc}>{career.desc}</span>
-                                        </div>
-                                    </div>
-                                </motion.div>
-                            ))}
-                        </div>
-                    )}
+                                    <AnimatePresence>
+                                        {isOpen && (
+                                            <motion.div
+                                                className={styles.cardDetails}
+                                                initial={{ height: 0, opacity: 0 }}
+                                                animate={{ height: 'auto', opacity: 1 }}
+                                                exit={{ height: 0, opacity: 0 }}
+                                                transition={{ duration: 0.3 }}
+                                            >
+                                                <p className={styles.cardDesc}>{career.desc}</p>
+
+                                                {career.project && (
+                                                    <h4 className={styles.projectTitle}>{career.project}</h4>
+                                                )}
+
+                                                {career.tasks && career.tasks.length > 0 && (
+                                                    <div className={styles.sectionBlock}>
+                                                        <span className={styles.sectionLabel}>【主な担当業務】</span>
+                                                        <ul className={styles.sectionList}>
+                                                            {career.tasks.map((task, i) => (
+                                                                <li key={i}>{task}</li>
+                                                            ))}
+                                                        </ul>
+                                                    </div>
+                                                )}
+
+                                                {career.achievements && career.achievements.length > 0 && (
+                                                    <div className={styles.sectionBlock}>
+                                                        <span className={styles.sectionLabel}>【実績・成果】</span>
+                                                        <ul className={styles.sectionList}>
+                                                            {career.achievements.map((ach, i) => (
+                                                                <li key={i}>{ach}</li>
+                                                            ))}
+                                                        </ul>
+                                                    </div>
+                                                )}
+
+                                                {career.tech && (
+                                                    <div className={styles.techBadge}>
+                                                        <strong>使用ITスキル: </strong>{career.tech}
+                                                    </div>
+                                                )}
+                                            </motion.div>
+                                        )}
+                                    </AnimatePresence>
+                                </div>
+                            </motion.div>
+                        );
+                    })}
                 </div>
             </div>
         </section>

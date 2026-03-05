@@ -4,6 +4,7 @@
 主に `src/data/profile.ts` を編集して、自分の情報に差し替えて使います。
 
 - 使い方: この `README.md`
+- profile.ts の編集: [`EDITING.md`](./EDITING.md)
 - 仕組みの学習: [`GUIDE.md`](./GUIDE.md)
 
 ## 1. このテンプレートの目的
@@ -22,7 +23,7 @@
 
 必要なもの:
 
-- Node.js `20.19.0` 以上
+- Node.js `20 LTS` 以上（推奨: 最新の LTS バージョン）
 - npm `10` 以上（推奨）
 - Git
 - エディタ（例: VS Code）
@@ -37,7 +38,7 @@ git --version
 
 目安:
 
-- `node -v` が `v20.19.0` 以上
+- `node -v` が `v20` 以上（LTS）
 - `npm -v` が `10.x.x` 以上
 
 推奨実行環境（このREADMEの標準）:
@@ -50,36 +51,154 @@ git --version
 - macOS / Linux でも同じコマンドで実行可能
 - Windows PowerShell はコマンド差異が出るため、このREADMEでは非推奨
 
-Docker（任意）:
+## 4. 最短セットアップ（ローカル確認を先に行う）
 
-- ローカルに Node 環境を入れたくない場合のみ使用
+このREADMEでは、次の順序を推奨します。
 
-## 4. 最短セットアップ（推奨）
+1. ローカルで起動して編集する
+2. 動作確認する
+3. 問題なければGitHubへ push する
 
-### 方法A: GitHub `Use this template`（推奨）
+### コマンドが不安な人へ（先に読む）
 
-1. GitHubでこのテンプレートを開く
-2. `Use this template` を押す
-3. 自分の新規リポジトリを作成
-4. 作成したリポジトリをローカルに clone
+- `cd` が必要な理由: ポートフォリオを作成したい任意の場所へ移動するためです。移動しないと、今いる場所にプロジェクトが作成されます。
+- `pwd` の役割: 今いる場所（現在地）を確認するためのコマンドです。
+- `git clone` の意味: GitHub上のプロジェクトを、自分のPCに丸ごとコピーする操作です。
+- この手順で使うコマンドは、基本的に「作成・コピー・起動」です。OS全体を壊すような危険な操作は含んでいません。
+- 不安な場合は、1行ずつ実行して `pwd` の表示を毎回確認してください。
 
-```bash
-git clone <YOUR_REPO_URL> my-portfolio
-cd my-portfolio
-npm install
-npm run dev
-```
-
-ブラウザで `http://localhost:5173` を開きます。
-
-### 方法B: 直接 clone（必要な場合のみ）
+### 4-1. ローカルにテンプレートを取得して起動
 
 ```bash
-git clone <TEMPLATE_REPO_URL> my-portfolio
+cd <作業したい親フォルダ>
+# 例:
+# cd ~/work
+# cd ~/projects
+pwd
+# ここで移動先（親フォルダ）が意図した場所か確認
+git clone https://github.com/hrkshz/Use-this-template.git my-portfolio
+# ↑ GitHub上のテンプレートを手元にコピー
+#    https://github.com/hrkshz/Use-this-template.git はコピー元URL
+#    my-portfolio はローカルに作られるフォルダ名（好きな名前に変更可）
 cd my-portfolio
+pwd
+# ここでプロジェクトフォルダに入れているか確認
+ls
+# フォルダ内のファイル一覧を確認（package.json, src/ などがあればOK）
 npm install
+# このサイトを動かすために必要なものを、このPCに入れる
 npm run dev
+# ローカル確認用のサーバーを起動する
+# ターミナルに以下のような表示が出る:
+#   ➜  Local:   http://localhost:5173/
+# この「Local:」の横に表示されたURLをブラウザで開く
+# ポートが使用中の場合は 5174, 5175... と別の番号になるので、
+# 必ずターミナルに表示されたURLを使うこと
+# 終了するときは Ctrl + C
 ```
+
+コマンドの意味（Linux/WSL2）:
+
+- `cd <ディレクトリ>`: 指定したディレクトリへ移動
+- `pwd`: 現在の作業ディレクトリを表示
+- `ls`: 今いるフォルダの中身を一覧表示
+- `git clone <URL> <フォルダ名>`: リモートリポジトリをローカルに複製
+- `npm install`: このプロジェクトに必要なものをPCへ入れる
+- `npm run dev`: ブラウザで確認するためのローカルサーバーを起動する
+
+期待結果:
+
+- 1つ目の `pwd` で、作業したい親フォルダが表示される
+- 2つ目の `pwd` で、末尾が `my-portfolio` のパスが表示される
+- `ls` で `package.json`, `src/`, `index.html` などが表示される
+- `npm run dev` 後、ターミナルに `➜  Local:   http://localhost:5173/` のようなURLが表示される
+- そのURLをブラウザで開くと、ポートフォリオ画面が表示される（ポート番号は環境により異なる場合があります）
+
+### 4-2. まず1か所だけ編集して表示確認
+
+まずは小さく1か所だけ変えて、反映を確認します。
+
+```ts
+// src/data/profile.ts
+name: '山田 太郎',
+```
+
+を次のように変えて保存します。
+
+```ts
+name: 'あなたの名前',
+```
+
+確認方法:
+
+1. ブラウザで `npm run dev` 時にターミナルに表示されたURLを開いたままにする
+2. `name` を保存する
+3. 画面の名前表示が変われば成功
+
+つまずいた場合:
+
+- 学習ガイドの「3. 最初の編集体験（5分）」を参照
+  [`GUIDE.md`](./GUIDE.md#3-最初の編集体験5分)
+
+### 4-3. 自分の情報に書き換える
+
+`src/data/profile.ts` を開き、各項目を自分の情報に書き換えます。
+経歴・スキル・資格・制作物の追加・削除方法は、編集ガイドを参照してください。
+
+→ [`EDITING.md`](./EDITING.md) — profile.ts 編集ガイド
+
+### 4-4. 編集が終わったら自分のGitHubへアップ
+
+前提条件:
+
+- GitHubで、公開先にしたいリポジトリを先に作成しておく
+- 公開したくない場合は、リポジトリ作成時または作成後に `Private` に設定する
+- 外部に公開したい場合だけ `Public` を選ぶ
+
+```bash
+pwd
+# いまの場所を確認（末尾が my-portfolio になっていればOK）
+rm -rf .git
+# テンプレート元のGit履歴を削除する
+# これにより、テンプレート作成者のコミット履歴が残らなくなる
+# ※ .git はGitの管理情報フォルダ。ソースコードには影響しません
+git init
+# 自分用の新しいGit履歴を作り直す
+git add .
+# すべてのファイルを記録対象として選ぶ
+git commit -m "Initial commit"
+# 自分の最初のコミットとして記録する
+# "Initial commit" はメッセージ（変更内容のメモ）。ここは自由に変更してOK
+# 例: "ポートフォリオ初版"
+git branch -M main
+# ブランチ名を main にそろえる
+git remote add origin <自分のリポジトリURL>
+# 自分のGitHubリポジトリを接続先として登録
+git push -u origin main
+# GitHubへ送信（次回以降の送信先も覚える）
+```
+
+コマンドの意味（Linux/WSL2）:
+
+- `pwd`: 現在の作業ディレクトリを表示
+- `rm -rf .git`: テンプレート元のGit管理情報を削除（ソースコードはそのまま残る）
+- `git init`: 新しいGitリポジトリを作成（自分の履歴をゼロから始める）
+- `git add .`: すべてのファイルを「次に記録する対象」として選ぶ
+- `git commit -m "<メッセージ>"`: 変更を記録し、メッセージで内容を短く残す
+- `git branch -M main`: ブランチ名を `main` にそろえる
+- `git remote add origin <URL>`: GitHubリポジトリを接続先として登録する
+- `git push -u <リモート名> <ブランチ名>`: GitHubへ送信し、次回以降の送信先を覚えさせる
+
+なぜ `rm -rf .git` をするのか:
+
+- `git clone` でコピーすると、テンプレート作成者のコミット履歴も一緒にコピーされます
+- そのまま push すると、自分のリポジトリにテンプレート作成者の履歴が残ります
+- `rm -rf .git` → `git init` で履歴をリセットすることで、自分のコミットだけが残ります
+
+補足:
+
+- GitHubで先に空リポジトリを作っておくと、push がスムーズです
+- `git push` 後にGitHubを開き、ファイル一覧が表示されれば反映完了です
 
 ## 5. ローカル起動とよくあるエラー
 
@@ -87,10 +206,28 @@ npm run dev
 
 ```bash
 npm install
+# このサイトを動かすために必要なものを、このPCに入れる
 npm run dev
+# ローカル確認用のサーバーを起動する
+# ターミナルに表示された「Local:」横のURLをブラウザで開く
+# 終了するときは Ctrl + C
 ```
 
+コマンドの意味（Linux/WSL2）:
+
+- `npm install`: このプロジェクトを動かすために必要なものをPCへ入れる
+- `npm run dev`: ローカルで確認するためのサーバーを起動する
+
 ### よくあるエラー
+
+`command not found` が出る:
+
+- `node -v` / `npm -v` / `git --version` を実行して、どのコマンドが見つからないか確認
+- WSL2 のターミナルで実行しているか確認（PowerShellではなく）
+
+`remote origin already exists` が出る:
+
+- `git remote set-url origin <自分のリポジトリURL>` を実行して接続先を更新
 
 `npm install` で失敗する:
 
@@ -108,65 +245,40 @@ npm run dev
 - `npm run dev` が動作中か確認
 - ページをハードリロード（`Ctrl + Shift + R` / `Cmd + Shift + R`）
 
-## 6. 最小編集フロー（まずはここだけ）
-
-1. `src/data/profile.ts` を開く
-2. 次の値を自分の情報に置換
-3. 保存してブラウザ表示を確認
-
-最初に置換する項目:
-
-- `name`
-- `nameReading`
-- `navName`
-- `location`
-- `email`
-- `github`
-- `subtitle`
-- `tagline`
-- `projects` の `github` / `demo`
-
-編集例:
-
-```ts
-name: '山田 太郎',
-email: 'taro@example.com',
-github: 'taro-github-id',
-```
-
-## 7. 提出前チェックリスト
+## 6. 提出前チェックリスト
 
 提出・公開前に確認:
 
-- サンプル文言が残っていない
+- `profile.ts` のサンプルデータが残っていない（`山田 太郎`, `example@gmail.com`, `サンプルアプリ` 等）
 - メールアドレスやGitHub IDが自分のものになっている
 - `projects` のリンク先が有効
 - 不要なダミー制作物を削除済み
+- テンプレ由来のドキュメントを整理済み:
+  - `GUIDE.md`: 学習用ガイドのため、公開時は削除を検討
+  - `EDITING.md`: 編集ガイドのため、公開時は削除を検討
+  - `README.md`: テンプレートの使い方説明のため、完成後は自分のプロジェクト紹介に書き換え
+- メール、住所、連絡先、外部リンクなどの個人情報を「公開してよい内容」にできている
+- 公開したくない情報がある場合は、公開範囲を限定する方針（アクセス制限あり）に決めた
+- 提出先の要件に合わせて、通常公開（Public）か限定公開かを決めた
+- 公開前に「この内容を本当にアップしてよいか」を再確認した
 - `npm run build` が成功する
 - 表示崩れがない（PCとスマホ幅）
 
-テンプレ由来の置換漏れチェック例:
-
-```bash
-rg "山田 太郎|Yamada|example@gmail.com|yourname|your-demo-url|TEMPLATE_REPO_URL" .
-```
-
-## 8. 提出時に迷わないための運用メモ
-
-- 提出用は `Use this template` で作った自分のリポジトリを使う
-- 自分の `README` タイトル・説明文に更新する
-- 不要な開発メモや下書きを残さない
-
-## 9. デプロイ手順（Vercel）
+## 7. デプロイ手順（Vercel）
 
 1. GitHubに push
 2. Vercelにログイン
 3. `New Project` で対象リポジトリを選択
 4. `Deploy`
+5. 公開範囲を設定する
+   - 公開してよい場合: 通常公開のまま運用
+   - 公開を制限したい場合: パスワード保護/アクセス制限機能を有効化
+6. 別ブラウザ（または未ログイン状態）でアクセス確認
+   - 制限あり設定の場合、想定どおりアクセス制限されることを確認
 
 ビルドコマンドは通常そのままで動作します。
 
-## 10. FAQ（初心者向け）
+## 8. FAQ（初心者向け）
 
 Q. どのファイルを触ればよい？  
 A. まずは `src/data/profile.ts` だけでOKです。

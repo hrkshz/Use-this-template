@@ -49,25 +49,6 @@
     opacity: 0.25;
 }
 
-.timelineSection {
-    margin-bottom: 0.5rem;
-}
-
-.timelineLabel {
-    font-size: 0.72rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    color: var(--accent-primary);
-    padding-left: 56px;
-    margin-bottom: 1.25rem;
-    margin-top: 2.5rem;
-}
-
-.timelineSection:first-child .timelineLabel {
-    margin-top: 0;
-}
-
 .timelineItem {
     position: relative;
     padding-left: 56px;
@@ -89,42 +70,34 @@
     z-index: 1;
 }
 
-.timelineItem.engineer .timelineDot {
-    background: var(--accent-gradient);
-    border: none;
-    color: white;
-    animation: dot-pulse 2.5s ease-in-out infinite;
-}
-
-@keyframes dot-pulse {
-    0%, 100% { box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.3); }
-    50% { box-shadow: 0 0 0 8px rgba(37, 99, 235, 0); }
-}
-
-/* Engineer card */
-.engineerCard {
+/* Card */
+.card {
     background: var(--bg-tertiary);
-    padding: 2rem;
+    padding: 1.25rem 1.5rem;
     border-radius: 16px;
     border: 1px solid var(--border-color);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+    transition: box-shadow 0.3s ease;
 }
 
-.engineerCard:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+.card:hover {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
 }
 
-.cardHeader {
+.card.open {
+    border-color: var(--accent-primary);
+}
+
+.card.open .timelineDot {
+    background: var(--accent-gradient);
+}
+
+/* Summary (always visible) */
+.cardSummary {
     display: flex;
-    align-items: center;
+    justify-content: space-between;
+    align-items: flex-start;
     gap: 1rem;
-    margin-bottom: 1rem;
-}
-
-.cardIcon {
-    color: var(--accent-primary);
-    flex-shrink: 0;
 }
 
 .cardTitle {
@@ -134,23 +107,44 @@
     margin: 0;
 }
 
-.cardRole {
+.cardCompany {
     font-size: 0.875rem;
     color: var(--text-tertiary);
-}
-
-.projectTitle {
-    font-size: 1rem;
-    font-weight: 600;
-    color: var(--text-primary);
-    margin-bottom: 0.5rem;
 }
 
 .cardDesc {
     font-size: 0.9rem;
     color: var(--text-secondary);
     line-height: 1.7;
-    margin-bottom: 1rem;
+    margin-top: 0.5rem;
+    margin-bottom: 0;
+}
+
+/* Chevron */
+.chevron {
+    color: var(--text-tertiary);
+    flex-shrink: 0;
+    margin-top: 0.25rem;
+    transition: transform 0.3s ease;
+}
+
+.chevronOpen {
+    transform: rotate(180deg);
+}
+
+/* Details (expandable) */
+.cardDetails {
+    overflow: hidden;
+    padding-top: 1rem;
+    margin-top: 1rem;
+    border-top: 1px solid var(--border-color);
+}
+
+.projectTitle {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 0.75rem;
 }
 
 .sectionBlock {
@@ -186,44 +180,6 @@
     color: var(--text-secondary);
 }
 
-/* General (compact) card */
-.generalCard {
-    background: var(--bg-tertiary);
-    padding: 0.9rem 1.25rem;
-    border-radius: 12px;
-    border: 1px solid var(--border-color);
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    transition: background 0.2s ease;
-}
-
-.generalCard:hover {
-    background: var(--bg-primary);
-}
-
-.generalCardIcon {
-    color: var(--text-tertiary);
-    flex-shrink: 0;
-}
-
-.generalCardBody {
-    display: flex;
-    flex-direction: column;
-    gap: 0.15rem;
-}
-
-.generalCardTitle {
-    font-size: 0.9rem;
-    font-weight: 600;
-    color: var(--text-secondary);
-}
-
-.generalCardDesc {
-    font-size: 0.825rem;
-    color: var(--text-tertiary);
-}
-
 @media (max-width: 768px) {
     .about {
         padding: 5rem 0;
@@ -241,17 +197,13 @@
         padding-left: 44px;
     }
 
-    .timelineLabel {
-        padding-left: 44px;
-    }
-
     .timelineDot {
         left: 4px;
         width: 20px;
         height: 20px;
     }
 
-    .engineerCard {
-        padding: 1.25rem;
+    .card {
+        padding: 1rem 1.25rem;
     }
 }
