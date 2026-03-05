@@ -3,6 +3,8 @@
 このリポジトリは、ポートフォリオを素早く作るためのたたき台です。  
 主に `src/data/profile.ts` を編集して、自分の情報に差し替えて使います。
 
+- デモを見る: https://use-this-template.vercel.app/
+- 完成イメージを先に確認できます。
 - 使い方: この `README.md`
 - profile.ts の編集: [`EDITING.md`](./EDITING.md)
 - 仕組みの学習: [`GUIDE.md`](./GUIDE.md)
