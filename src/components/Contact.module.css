@@ -1,0 +1,132 @@
+.contact {
+    padding: 8rem 0;
+    background-color: var(--bg-primary);
+}
+
+.header {
+    margin-bottom: 4rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.line {
+    height: 4px;
+    width: 60px;
+    background: var(--accent-gradient);
+    border-radius: 2px;
+}
+
+.cardGrid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.card {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 2rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0.5rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+.cardDisabled {
+    opacity: 0.4;
+    pointer-events: none;
+}
+
+.cardDisabled:hover {
+    transform: none;
+    box-shadow: none;
+}
+
+.iconBox {
+    width: 56px;
+    height: 56px;
+    background: var(--bg-tertiary);
+    border-radius: 14px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--accent-primary);
+    margin-bottom: 0.5rem;
+}
+
+.cardLabel {
+    font-size: 0.8rem;
+    color: var(--text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.cardValue {
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--text-primary);
+}
+
+.cardLink {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--accent-primary);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.cardLink:hover {
+    text-decoration: underline;
+}
+
+.cta {
+    text-align: center;
+    margin-top: 3rem;
+}
+
+.ctaBtn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem 2.5rem;
+    background: var(--accent-gradient);
+    color: white;
+    font-weight: 600;
+    font-size: 1.1rem;
+    border-radius: 8px;
+    transition: opacity 0.2s ease;
+}
+
+.ctaBtn:hover {
+    opacity: 0.85;
+}
+
+@media (max-width: 768px) {
+    .cardGrid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 480px) {
+    .cardGrid {
+        grid-template-columns: 1fr;
+    }
+}

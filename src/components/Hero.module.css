@@ -1,0 +1,112 @@
+.hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    padding-top: 5rem;
+}
+
+.backgroundGlow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 60vw;
+    height: 60vw;
+    background: radial-gradient(circle, rgba(59, 130, 246, 0.08) 0%, rgba(139, 92, 246, 0.06) 50%, rgba(10, 10, 10, 0) 70%);
+    border-radius: 50%;
+    z-index: 0;
+    pointer-events: none;
+    filter: blur(60px);
+}
+
+.heroContainer {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+}
+
+.content {
+    max-width: 640px;
+}
+
+.greeting {
+    display: block;
+    font-size: 1rem;
+    color: var(--text-tertiary);
+    margin-bottom: 0.75rem;
+    font-weight: 400;
+}
+
+.title {
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    font-weight: 800;
+    line-height: 1.4;
+    margin-bottom: 1.5rem;
+    letter-spacing: -1px;
+}
+
+.furigana {
+    font-size: 0.35em;
+    font-weight: 400;
+    letter-spacing: 2px;
+    color: var(--text-secondary);
+}
+
+.subtitle {
+    font-size: clamp(1rem, 2vw, 1.1rem);
+    color: var(--text-secondary);
+    max-width: 520px;
+    margin-bottom: 1.5rem;
+    line-height: 1.8;
+}
+
+.statusBadge {
+    display: inline-block;
+    padding: 0.35rem 0.9rem;
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    margin-bottom: 2rem;
+    font-size: 0.8rem;
+    color: var(--text-tertiary);
+    font-weight: 500;
+}
+
+.actions {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.primaryBtn,
+.secondaryBtn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.85rem 1.75rem;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: all 0.2s ease;
+}
+
+.primaryBtn {
+    background: var(--text-primary);
+    color: var(--bg-primary);
+}
+
+.primaryBtn:hover {
+    opacity: 0.85;
+}
+
+.secondaryBtn {
+    background: transparent;
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+}
+
+.secondaryBtn:hover {
+    border-color: var(--text-primary);
+}
