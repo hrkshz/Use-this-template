@@ -58,18 +58,6 @@ const Contact: React.FC = () => {
                         )}
                     </div>
                 </motion.div>
-
-                <motion.div
-                    className={styles.cta}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.6, delay: 0.4 }}
-                >
-                    <a href={`mailto:${profile.email}`} className={styles.ctaBtn}>
-                        <Mail size={20} /> メールを送る
-                    </a>
-                </motion.div>
             </div>
         </section>
     );

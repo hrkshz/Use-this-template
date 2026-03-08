@@ -67,8 +67,9 @@ const About: React.FC = () => {
                                         <div>
                                             <h3 className={styles.cardTitle}>{career.role}</h3>
                                             {career.company && (
-                                                <span className={styles.cardCompany}>{career.company}</span>
+                                                <span className={styles.cardMeta}>{career.company}</span>
                                             )}
+                                            <p className={styles.cardDesc}>{career.desc}</p>
                                         </div>
                                         <span className={`${styles.chevron} ${isOpen ? styles.chevronOpen : ''}`}>
                                             <ChevronDown size={20} />
@@ -84,8 +85,6 @@ const About: React.FC = () => {
                                                 exit={{ height: 0, opacity: 0 }}
                                                 transition={{ duration: 0.3 }}
                                             >
-                                                <p className={styles.cardDesc}>{career.desc}</p>
-
                                                 {career.project && (
                                                     <h4 className={styles.projectTitle}>{career.project}</h4>
                                                 )}
