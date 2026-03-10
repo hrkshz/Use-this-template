@@ -80,6 +80,34 @@ git --version
 2. 動作確認する
 3. 問題なければGitHubへ push する
 
+### 4-0. どこで作業するか
+
+このREADMEの標準フローは、`Windows + WSL2 + VS Code` です。
+「Windowsで適当にVS Codeを開く」のではなく、`WSL側のフォルダをVS Codeで開く` 前提で進めてください。
+
+流れ:
+
+1. Windowsで WSL2（Ubuntu など）を起動する
+2. WSL のターミナルで作業したい場所へ移動する
+3. その場所で `code .` を実行して、WSL 側フォルダを VS Code で開く
+4. 以降のコマンドは、VS Code 内のターミナル、または WSL ターミナルで実行する
+
+例:
+
+```bash
+wsl
+# Windows から WSL を起動する場合
+cd ~/work
+pwd
+code .
+```
+
+補足:
+
+- `code .` は「今いるフォルダをVS Codeで開く」という意味です
+- VS Code の左下に `WSL` と出ていれば、WSL 側で開けています
+- 以降の `npm install` や `npm run dev` は、PowerShell ではなく WSL 側ターミナルで実行してください
+
 ### コマンドが不安な人へ（先に読む）
 
 - `cd` が必要な理由: ポートフォリオを作成したい任意の場所へ移動するためです。移動しないと、今いる場所にプロジェクトが作成されます。
@@ -109,6 +137,9 @@ ls
 # フォルダ内のファイル一覧を確認（package.json, src/ などがあればOK）
 npm install
 # このサイトを動かすために必要なものを、このPCに入れる
+# VS Code 上の TypeScript エラー解消にも必要
+# 例: 'vite/client' の型定義ファイルが見つかりません
+# これは依存関係が未インストールだと起こりうる
 npm run dev
 # ローカル確認用のサーバーを起動する
 # ターミナルに以下のような表示が出る:
@@ -125,7 +156,7 @@ npm run dev
 - `pwd`: 現在の作業ディレクトリを表示
 - `ls`: 今いるフォルダの中身を一覧表示
 - `git clone <URL> <フォルダ名>`: リモートリポジトリをローカルに複製
-- `npm install`: このプロジェクトに必要なものをPCへ入れる
+- `npm install`: このプロジェクトに必要なものをPCへ入れる。VS Code が型定義を読めるようにする役割もある
 - `npm run dev`: ブラウザで確認するためのローカルサーバーを起動する
 
 期待結果:
@@ -242,6 +273,9 @@ git push -u origin main
 ```bash
 npm install
 # このサイトを動かすために必要なものを、このPCに入れる
+# まだ node_modules が無い初回状態では、
+# VS Code に 'vite/client' の型エラーが出ることがある
+# その場合もまずは npm install を実行する
 npm run dev
 # ローカル確認用のサーバーを起動する
 # ターミナルに表示された「Local:」横のURLをブラウザで開く
@@ -250,7 +284,7 @@ npm run dev
 
 コマンドの意味（Linux/WSL2）:
 
-- `npm install`: このプロジェクトを動かすために必要なものをPCへ入れる
+- `npm install`: このプロジェクトを動かすために必要なものをPCへ入れる。型定義や開発用ツールもここでそろう
 - `npm run dev`: ローカルで確認するためのサーバーを起動する
 
 ### よくあるエラー
@@ -268,9 +302,18 @@ npm run dev
 
 - Node/npm のバージョンを再確認
 - `pwd` と `ls` でプロジェクトのルートにいるか確認
+- VS Code を使っている場合は、WSL 側のフォルダを開いているか確認
 - もう一度 `npm install` を実行
 - それでも直らない場合は `node_modules` を削除して再実行
 - `package-lock.json` の削除は最後の手段として行う
+
+`'vite/client' の型定義ファイルが見つかりません` と VS Code に出る:
+
+- 多くの場合、まだ `npm install` をしていないことが原因
+- このプロジェクトは `tsconfig.app.json` で `vite/client` を参照しているため、依存関係が入っていないと VS Code が型定義を解決できない
+- まず WSL 側ターミナルで `npm install` を実行
+- その後も残る場合は、VS Code が WSL ではなく Windows 側の環境を見ていないか確認
+- 必要なら VS Code を WSL で開き直し、`TypeScript: Restart TS Server` を実行
 
 `Port 5173 is already in use`:
 
@@ -345,6 +388,9 @@ A. `src/index.css` のCSS変数を変更します。
 
 Q. 一部セクションを消したい  
 A. `src/App.tsx` で該当コンポーネントを外します。
+
+Q. VS Code に `'vite/client' の型定義ファイルが見つかりません` と出る  
+A. まず `npm install` を実行してください。初回状態では依存関係が未インストールのため起こりえます。まだ直らない場合は、WSL 側フォルダを VS Code で開いているか確認し、必要なら TypeScript Server を再起動します。
 
 ## 参考: よく使うコマンド
 
